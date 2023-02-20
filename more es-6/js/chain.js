@@ -13,3 +13,6 @@ const data = {
 };
 // console.log(data.data[0].name);
 console.log(data.data[1].id);
+// optional chaining
+const optional = data.data[0]?.dept;
+console.log(optional);
