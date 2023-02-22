@@ -82,3 +82,9 @@ const object1 = new Instructor("Mohammad Ali", "Sirajganj");
 console.log(object1);
 object1.startSupportSession(`9:30pm`);
 object1.creatQuize(35);
+const product = {
+  name: "Laptop",
+  model: "Yoga 3",
+  price: 49000,
+  dusk: "512SSD",
+};
