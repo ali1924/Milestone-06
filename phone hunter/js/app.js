@@ -7,9 +7,22 @@ const loadPhones = async (searchText) => {
   detailsPhone(data.data);
 };
 const detailsPhone = (phones) => {
-  console.log(phones);
+    console.log(phones);
     const phonesContainer = document.getElementById("phone-container");
     phonesContainer.textContent = ``;
+    // display 20 phones only
+  phones = phones.slice(0, 3);
+
+  // display no phone
+  const noPhoneMessage = document.getElementById('no-found-message');
+  if (phones.length===0) {
+    // console.log(noPhoneMessage.innerHTML)
+    noPhoneMessage.classList.remove('d-none');
+  }
+  // display all phone
+  else {
+    noPhoneMessage.classList.add('d-none');
+  }
   phones.forEach((phone) => {
     // console.log(phone);
     const phoneDiv = document.createElement("div");
