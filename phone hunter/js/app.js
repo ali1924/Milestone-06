@@ -42,12 +42,28 @@ const detailsPhone = (phones) => {
         `;
     phonesContainer.appendChild(phoneDiv);
   });
+  // stop loader
+  toggleSpinner(false);
 };
+// handle search button click
 document.getElementById("btn-search").addEventListener('click', function () {
     // console.log('button')
+    // start loader
+    toggleSpinner(true);
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     console.log(searchText);
     loadPhones(searchText);
 });
-loadPhones();
+const toggleSpinner = isLoading => {
+  const loaderSection = document.getElementById("loader");
+  if (isLoading) {
+    loaderSection.classList.remove('d-none');
+  }
+  else {
+    loaderSection.classList.add('d-none');
+  }
+
+}
+// loadPhones();
+
