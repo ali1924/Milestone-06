@@ -1,28 +1,36 @@
 console.log("appp");
-const loadPhones = async (searchText) => {
+const loadPhones = async (searchText,dataLimit) => {
   const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
   const response = await fetch(url);
   const data = await response.json();
   console.log(data);
-  detailsPhone(data.data);
+  detailsPhone(data.data,dataLimit);
 };
-const detailsPhone = (phones) => {
-    console.log(phones);
-    const phonesContainer = document.getElementById("phone-container");
-    phonesContainer.textContent = ``;
-    // display 20 phones only
-  phones = phones.slice(0, 3);
-
-  // display no phone
-  const noPhoneMessage = document.getElementById('no-found-message');
-  if (phones.length===0) {
+const detailsPhone = (phones,dataLimit) => {
+  console.log(phones);
+  const phonesContainer = document.getElementById("phone-container");
+  phonesContainer.textContent = ``;
+  // display 10 phones only
+  const showAll = document.getElementById("show-all");
+  // phones = phones.slice(0, 10);
+  if (dataLimit && phones.length > 10) {
+    phones = phones.slice(0, 10);
+    showAll.classList.remove("d-none");
+  }
+  else {
+    showAll.classList.add('d-none');
+  }
+  /* // display no phone
+  const noPhoneMessage = document.getElementById("no-found-message");
+  if (phones.length === 0) {
     // console.log(noPhoneMessage.innerHTML)
-    noPhoneMessage.classList.remove('d-none');
+    noPhoneMessage.classList.remove("d-none");
+    
   }
   // display all phone
   else {
-    noPhoneMessage.classList.add('d-none');
-  }
+    noPhoneMessage.classList.add("d-none");
+  }*/
   phones.forEach((phone) => {
     // console.log(phone);
     const phoneDiv = document.createElement("div");
@@ -45,25 +53,30 @@ const detailsPhone = (phones) => {
   // stop loader
   toggleSpinner(false);
 };
-// handle search button click
-document.getElementById("btn-search").addEventListener('click', function () {
-    // console.log('button')
-    // start loader
+const processSearch = (dataLimit) => {
     toggleSpinner(true);
-    const searchField = document.getElementById('search-field');
+    const searchField = document.getElementById("search-field");
     const searchText = searchField.value;
-    console.log(searchText);
-    loadPhones(searchText);
+    // console.log(searchText);
+    loadPhones(searchText,dataLimit);
+}
+// handle search button click
+document.getElementById("btn-search").addEventListener("click", function () {
+  // console.log('button')
+  // start loader
+  processSearch(10);
 });
-const toggleSpinner = isLoading => {
+const toggleSpinner = (isLoading) => {
   const loaderSection = document.getElementById("loader");
   if (isLoading) {
-    loaderSection.classList.remove('d-none');
+    loaderSection.classList.remove("d-none");
+  } else {
+    loaderSection.classList.add("d-none");
   }
-  else {
-    loaderSection.classList.add('d-none');
-  }
+};
+// not the best way to load all
+document.getElementById("btn-show-all").addEventListener('click', function () {
+  processSearch();
+})
 
-}
 // loadPhones();
-
