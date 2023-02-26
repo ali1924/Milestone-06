@@ -52,13 +52,54 @@
       </section>
       <!-- spinner loader -->
       <section id="loader" class="d-none">
-        <div style="height: 120px;" class="d-flex justify-content-center border  boder-5 border-primary align-items-center m-5">
+        <div
+          style="height: 120px"
+          class="d-flex justify-content-center border boder-5 border-primary align-items-center m-5"
+        >
           <div class="spinner-border text-success" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
         </div>
-        
       </section>
+
+      <!-- modal contents -->
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="phoneDelailsModal"
+        tabindex="-1"
+        aria-labelledby="phoneDelailsModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="phoneDelailsModalLabel">
+                
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body" id="phone-body-modal"></div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- Script -->

@@ -1,12 +1,12 @@
 console.log("appp");
-const loadPhones = async (searchText,dataLimit) => {
+const loadPhones = async (searchText, dataLimit) => {
   const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
   const response = await fetch(url);
   const data = await response.json();
   console.log(data);
-  detailsPhone(data.data,dataLimit);
+  detailsPhone(data.data, dataLimit);
 };
-const detailsPhone = (phones,dataLimit) => {
+const detailsPhone = (phones, dataLimit) => {
   console.log(phones);
   const phonesContainer = document.getElementById("phone-container");
   phonesContainer.textContent = ``;
@@ -16,9 +16,8 @@ const detailsPhone = (phones,dataLimit) => {
   if (dataLimit && phones.length > 10) {
     phones = phones.slice(0, 10);
     showAll.classList.remove("d-none");
-  }
-  else {
-    showAll.classList.add('d-none');
+  } else {
+    showAll.classList.add("d-none");
   }
   /* // display no phone
   const noPhoneMessage = document.getElementById("no-found-message");
@@ -45,7 +44,11 @@ const detailsPhone = (phones,dataLimit) => {
                             natural lead-in to additional content. This content is a
                             little bit longer.
                         </p>
-                        <button onclick="loadPhoneDetails('${phone.slug}')" href="#" class="btn btn-primary">Show Details</button>
+                        <button onclick="loadPhoneDetails('${phone.slug}')" href="#" 
+                         class="btn btn-primary" data-bs-toggle="modal"
+                         data-bs-target="#phoneDelailsModal" >
+                         Show Details
+                         </button>
                     </div>
                 </div>
         `;
@@ -55,12 +58,12 @@ const detailsPhone = (phones,dataLimit) => {
   toggleSpinner(false);
 };
 const processSearch = (dataLimit) => {
-    toggleSpinner(true);
-    const searchField = document.getElementById("search-field");
-    const searchText = searchField.value;
-    // console.log(searchText);
-    loadPhones(searchText,dataLimit);
-}
+  toggleSpinner(true);
+  const searchField = document.getElementById("search-field");
+  const searchText = searchField.value;
+  // console.log(searchText);
+  loadPhones(searchText, dataLimit);
+};
 // handle search button click
 document.getElementById("btn-search").addEventListener("click", function () {
   // console.log('button')
@@ -68,13 +71,14 @@ document.getElementById("btn-search").addEventListener("click", function () {
   processSearch(10);
 });
 // search input filed enter key handler
-document.getElementById('search-field').addEventListener('keypress', function (e) {
-  console.log(e.key);
-  if (e.key === 'Enter') {
-    processSearch(10);
-  }
-})
-
+document
+  .getElementById("search-field")
+  .addEventListener("keypress", function (e) {
+    console.log(e.key);
+    if (e.key === "Enter") {
+      processSearch(10);
+    }
+  });
 
 const toggleSpinner = (isLoading) => {
   const loaderSection = document.getElementById("loader");
@@ -85,14 +89,36 @@ const toggleSpinner = (isLoading) => {
   }
 };
 // not the best way to load all
-document.getElementById("btn-show-all").addEventListener('click', function () {
+document.getElementById("btn-show-all").addEventListener("click", function () {
   processSearch();
-})
+});
 // display loadphoneDetails
-const loadPhoneDetails =async id => {
+const loadPhoneDetails = async (id) => {
   const url = `https://openapi.programming-hero.com/api/phone/${id}`;
   const response = await fetch(url);
   const data = await response.json();
-  console.log(data);
+  // console.log(data.data);
+  displayPhoneDetails(data.data);
+};
+const displayPhoneDetails = phone => {
+  console.log(phone);
+  const brandPhone = document.getElementById('phoneDelailsModalLabel');
+  brandPhone.innerText = phone.brand;
+
+  const phoneBodyModal = document.getElementById("phone-body-modal");
+  const phoneBodyModalDiv = document.createElement('div');
+  phoneBodyModalDiv.innerHTML = `
+           <div>
+                <img src="${phone.image}"></img>
+            <div>
+            <div>
+                <h4>Model:${phone.name}</h4>
+                <h4>Chipset:${phone.mainFeatures.chipSet}</h4>
+                <h4>Display Size:${phone.mainFeatures.displaySize}</h4>
+                <h4>Memory:${phone.mainFeatures.memory}</h4>
+            </div>    
+  `;
+  phoneBodyModal.appendChild(phoneBodyModalDiv);
+  
 }
 // loadPhones();
